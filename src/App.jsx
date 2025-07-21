@@ -9,11 +9,13 @@ function App() {
   const [number, setNumber] = useState("");
   const [newNumber, setNewNumber] = useState(0);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   // Only allow MetaMask
   const isMetaMask = window.ethereum && window.ethereum.isMetaMask;
 
   const requestAccount = async () => {
+    setSuccess("");
     if (isMetaMask) {
       try {
         await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -28,6 +30,7 @@ function App() {
 
   const storeNumber = async (data) => {
     setError("");
+    setSuccess("");
     if (isMetaMask) {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
@@ -35,7 +38,7 @@ function App() {
       try {
         const tx = await contract.store(data);
         await tx.wait();
-        setError("Number stored successfully!");
+        setSuccess("Number stored successfully!");
       } catch (error) {
         setError(
           "Error storing number: " + (error?.reason || error?.message || error)
@@ -48,6 +51,7 @@ function App() {
 
   const getNumber = async () => {
     setError("");
+    setSuccess("");
     setNumber("");
     if (isMetaMask) {
       const provider = new ethers.BrowserProvider(window.ethereum);
@@ -94,6 +98,14 @@ function App() {
         <div>
           <h3> Stored Number: {number !== "" ? number : "Click on 'Get'."}</h3>
         </div>
+        {success && (
+          <div
+            className="success"
+            style={{ color: "green", marginTop: "1rem" }}
+          >
+            {success}
+          </div>
+        )}
         {error && (
           <div className="error" style={{ color: "red", marginTop: "1rem" }}>
             {error}
