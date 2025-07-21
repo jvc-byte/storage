@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 import './App.css'
 import abi from "./abi.json";
 
-const contractAddress = '0x73ace4Ea21E73fE9532768B2Ac7B598171CD360B';
+const contractAddress = '0x2D428792a33F093DC48e0F4FD7917D4e5e107c04';
 
 function App() {
   const [number, setNumber] = useState(0)
