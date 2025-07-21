@@ -11,8 +11,13 @@ function App() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Only allow MetaMask
-  const isMetaMask = window.ethereum && window.ethereum.isMetaMask;
+  // Improved MetaMask detection for mobile browsers
+  let isMetaMask = false;
+  if (typeof window !== 'undefined' && window.ethereum) {
+    // On desktop, isMetaMask is true if MetaMask is present
+    // On mobile, some browsers (MetaMask app) may not set isMetaMask, but do inject ethereum
+    isMetaMask = window.ethereum.isMetaMask || /MetaMask/i.test(window.navigator.userAgent);
+  }
 
   const requestAccount = async () => {
     setSuccess("");
