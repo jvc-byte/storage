@@ -13,10 +13,12 @@ function App() {
 
   // Improved MetaMask detection for mobile browsers
   let isMetaMask = false;
-  if (typeof window !== 'undefined' && window.ethereum) {
+  if (typeof window !== "undefined" && window.ethereum) {
     // On desktop, isMetaMask is true if MetaMask is present
     // On mobile, some browsers (MetaMask app) may not set isMetaMask, but do inject ethereum
-    isMetaMask = window.ethereum.isMetaMask || /MetaMask/i.test(window.navigator.userAgent);
+    isMetaMask =
+      window.ethereum.isMetaMask ||
+      /MetaMask/i.test(window.navigator.userAgent);
   }
 
   const requestAccount = async () => {
